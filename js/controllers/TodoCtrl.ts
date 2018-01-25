@@ -10,6 +10,7 @@ module todos {
 	 */
 
 	export class TodoCtrl{
+
 		private todos: TodoItem[];
 
 		public static $inject = [
@@ -18,10 +19,10 @@ module todos {
 			'todoStorage',
 			'filterFilter'
 		];
-		// $inject の注釈
+		
+		
 		//依存関係はAngularjs $injector　を通してインジェクトされる
-		//コントローラの名前はApplication.tsに登録されて、index.htmlのng-controller属性によって特定されてい
-
+		//コントローラの名前はApplication.tsに登録されて、index.htmlのng-controller属性によって特定されている
 		constructor(
 			private $scope: ITodoScope,
 			private $location: ng.ILocationService,
@@ -38,10 +39,10 @@ module todos {
 			$scope.vm = this;
 
 			//view/user input によるイベントや変更を感知するために書く
-			$scope.$watch('todos', ()=>this.onTodos(), true);
-			$scope.$watch('location.path()', path => this.onPath(path));
+			$scope.$watch('todos', () => this.onTodos(), true);
+			$scope.$watch('location.path()', path => this.onPath(path))
 
-			if ($location.path() === '' ) $location.path('/');
+			if ($location.path() === '') $location.path('/');
 			$scope.location = $location;
 		}
 
@@ -50,9 +51,9 @@ module todos {
 		}
 
 		onTodos() {
-			this.$scope.remainingCount = this.filterFilter(this.todos,{ completed: false}).length;
+			this.$scope.remainingCount = this.filterFilter(this.todos, { completed: false }).length;
 			this.$scope.doneCount = this.todos.length - this.$scope.remainingCount;
-			this.$scope.allChecked = !this.$scope.remainingCount;
+			this.$scope.allChecked = !this.$scope.remainingCount
 			this.todoStorage.put(this.todos);
 		}
 
@@ -61,7 +62,6 @@ module todos {
 			if (!newTodo.length){
 				return;
 			}
-
 			this.todos.push(new TodoItem(newTodo, false));
 			this.$scope.newTodo = '';
 		}

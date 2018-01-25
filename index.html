@@ -1,13 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" ng-app="todomvc" data-framework="typescript">
-<head>
-  <meta charset="UTF-8">
-  <title>TS & AngularJS TODOMVC</title>
-  <link rel="stylesheet" href="node_modules/todomvc-common/base.css">
-  <link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+	<head>
+		<meta charset="utf-8">
+		<title>Typescript & AngularJS • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-common/base.css">
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
   <!-- ngCloakはコンパイル中に削除される。画面のチラツキをなくすためにつかう。処理終わるまでの表示どうする？って感じ-->
   <style>[ng-cloak] { display: none;}</style>
-  <title>Document</title>
 </head>
 <body>
   <section class="todoapp" ng-controller="todoCtrl">
@@ -22,20 +21,20 @@
       <label for="toggle-all">Mark all as complete</label>
       <ul class="todo-list">
         <!-- filterの機能が沢山。-->
-        <li ng-repeat="todo in todos | filter:statusFilter track by $index" ng-class="{completed: todo.completed, editing:todo = editedTodo}">
+        <li ng-repeat="todo in todos | filter:statusFilter track by $index" ng-class="{completed: todo.completed, editing:todo == editedTodo}">
           <div class="view">
             <input class="toggle" type="checkbox" ng-model="todo.completed">
               <!-- ngDblclickはダブルクリックイベント-->
-              <label ng-dblclick="vm.doneEditing(todo)"></label>
+              <label ng-dblclick="vm.editTodo(todo)">{{todo.title}}</label>
               <button class="destroy" ng-click="vm.removeTodo(todo)"></button>
           </div>
-          <form ng-submit="vm.doneEditing()todo">
-            <input class="edit" ng-model="todo.title" todo-blur="vm.doneEditing(todo)">
+          <form ng-submit="vm.doneEditing(todo)">
+            <input class="edit" ng-model="todo.title" todo-blur="vm.doneEditing(todo)" todo-focus="todo == editedTodo" todo-escape="vm.revertEdits(todo)">
           </form>
         </li>
       </ul>
     </section>
-    <footer class="footer" ng-show="todo.length" ng-cloak>
+    <footer class="footer" ng-show="todos.length" ng-cloak>
       <span class="todo-count"><strong>{{remainingCount}}</strong>
       <ng-pluralize count="remainingCount" when="{ one:'item left', other:'items left'}"></ng-pluralize>
       </span>

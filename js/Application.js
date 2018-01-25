@@ -8,7 +8,7 @@ var todos;
             this.completed = completed;
         }
         return TodoItem;
-    })();
+    }());
     todos.TodoItem = TodoItem;
 })(todos || (todos = {}));
 /// <reference path='../_all.ts' />
@@ -38,9 +38,6 @@ var todos;
 var todos;
 (function (todos) {
     'use strict';
-    /**
-     * Directive that executes an expression when the element it is applied to loses focus.
-     */
     function todoBlur() {
         return {
             link: function ($scope, element, attributes) {
@@ -56,9 +53,6 @@ var todos;
 (function (todos) {
     'use strict';
     var ESCAPE_KEY = 27;
-    /**
-     * Directive that cancels editing a todo if the user presses the Esc key.
-     */
     function todoEscape() {
         return {
             link: function ($scope, element, attributes) {
@@ -78,20 +72,22 @@ var todos;
 (function (todos_1) {
     'use strict';
     /**
-     * Services that persists and retrieves TODOs from localStorage.
-     */
+       * localStorageからTODOsを結びつけたりするサービス
+    */
     var TodoStorage = (function () {
         function TodoStorage() {
             this.STORAGE_ID = 'todos-angularjs-typescript';
         }
         TodoStorage.prototype.get = function () {
+            console.log('get is worked');
             return JSON.parse(localStorage.getItem(this.STORAGE_ID) || '[]');
         };
         TodoStorage.prototype.put = function (todos) {
+            console.log('put is worked');
             localStorage.setItem(this.STORAGE_ID, JSON.stringify(todos));
         };
         return TodoStorage;
-    })();
+    }());
     todos_1.TodoStorage = TodoStorage;
 })(todos || (todos = {}));
 /// <reference path='../_all.ts' />
@@ -99,13 +95,13 @@ var todos;
 (function (todos) {
     'use strict';
     /**
-     * The main controller for the app. The controller:
-     * - retrieves and persists the model via the todoStorage service
-     * - exposes the model to the template and provides event handlers
+     * このアプリのメインのコントローラ.
+     * - todoStorage serviceを通して,モデルを維持したり結びつけたりする。
+     * - モデルをテンプレートに渡してイベントハンドラを提供する
      */
     var TodoCtrl = (function () {
-        // dependencies are injected via AngularJS $injector
-        // controller's name is registered in Application.ts and specified from ng-controller attribute in index.html
+        //依存関係はAngularjs $injector　を通してインジェクトされる
+        //コントローラの名前はApplication.tsに登録されて、index.htmlのng-controller属性によって特定されている
         function TodoCtrl($scope, $location, todoStorage, filterFilter) {
             var _this = this;
             this.$scope = $scope;
@@ -115,11 +111,10 @@ var todos;
             this.todos = $scope.todos = todoStorage.get();
             $scope.newTodo = '';
             $scope.editedTodo = null;
-            // 'vm' stands for 'view model'. We're adding a reference to the controller to the scope
-            // for its methods to be accessible from view / HTML
+            //vm はviewmodelから名付けられている。scopeにコントローラへのリファレンスを追加する
+            //というのも、view/htmlからこの関数を使えるようにするためにね！
             $scope.vm = this;
-            // watching for events/changes in scope, which are caused by view/user input
-            // if you subscribe to scope or event with lifetime longer than this controller, make sure you unsubscribe.
+            //view/user input によるイベントや変更を感知するために書く
             $scope.$watch('todos', function () { return _this.onTodos(); }, true);
             $scope.$watch('location.path()', function (path) { return _this.onPath(path); });
             if ($location.path() === '')
@@ -127,9 +122,7 @@ var todos;
             $scope.location = $location;
         }
         TodoCtrl.prototype.onPath = function (path) {
-            this.$scope.statusFilter = (path === '/active') ?
-                { completed: false } : (path === '/completed') ?
-                { completed: true } : {};
+            this.$scope.statusFilter = (path === '/active') ? { completed: false } : (path === 'completed') ? { completed: true } : {};
         };
         TodoCtrl.prototype.onTodos = function () {
             this.$scope.remainingCount = this.filterFilter(this.todos, { completed: false }).length;
@@ -147,7 +140,7 @@ var todos;
         };
         TodoCtrl.prototype.editTodo = function (todoItem) {
             this.$scope.editedTodo = todoItem;
-            // Clone the original todo in case editing is cancelled.
+            //編集が中断された時用にクローンしておく
             this.$scope.originalTodo = angular.extend({}, todoItem);
         };
         TodoCtrl.prototype.revertEdits = function (todoItem) {
@@ -158,7 +151,6 @@ var todos;
             this.$scope.editedTodo = null;
             this.$scope.originalTodo = null;
             if (this.$scope.reverted) {
-                // Todo edits were reverted, don't save.
                 this.$scope.reverted = null;
                 return;
             }
@@ -176,10 +168,6 @@ var todos;
         TodoCtrl.prototype.markAll = function (completed) {
             this.todos.forEach(function (todoItem) { todoItem.completed = completed; });
         };
-        // $inject annotation.
-        // It provides $injector with information about dependencies to be injected into constructor
-        // it is better to have it close to the constructor, because the parameters must match in count and type.
-        // See http://docs.angularjs.org/guide/di
         TodoCtrl.$inject = [
             '$scope',
             '$location',
@@ -187,12 +175,12 @@ var todos;
             'filterFilter'
         ];
         return TodoCtrl;
-    })();
+    }());
     todos.TodoCtrl = TodoCtrl;
 })(todos || (todos = {}));
-/// <reference path='_all.ts' />
+/// <reference path='_all.ts'/>
 /**
- * The main TodoMVC app module.
+ * The manin TodoMVC app module.
  *
  * @type {angular.Module}
  */
@@ -202,7 +190,7 @@ var todos;
     var todomvc = angular.module('todomvc', [])
         .controller('todoCtrl', todos.TodoCtrl)
         .directive('todoBlur', todos.todoBlur)
-        .directive('todoFocus', todos.todoFocus)
+        .directive('todoFocucs', todos.todoFocus)
         .directive('todoEscape', todos.todoEscape)
         .service('todoStorage', todos.TodoStorage);
 })(todos || (todos = {}));

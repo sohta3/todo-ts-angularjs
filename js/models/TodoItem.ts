@@ -4,9 +4,9 @@ module todos {
   'use strict';
 
   export class TodoItem {
-    constructor(
-      public title: string,
-      public completed: boolean
-    ){}
+      constructor(
+          public title: string,
+          public completed: boolean
+          ) { }
   }
 }
