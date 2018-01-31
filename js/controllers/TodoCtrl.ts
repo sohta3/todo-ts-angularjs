@@ -66,6 +66,10 @@ module todos {
 			this.$scope.newTodo = '';
 		}
 
+		checkurl(e){
+			console.log(e.location.path());
+		}
+
 		editTodo(todoItem:TodoItem){
 			this.$scope.editedTodo = todoItem;
 

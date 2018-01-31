@@ -138,6 +138,9 @@ var todos;
             this.todos.push(new todos.TodoItem(newTodo, false));
             this.$scope.newTodo = '';
         };
+        TodoCtrl.prototype.checkurl = function (e) {
+            console.log(e.location.path());
+        };
         TodoCtrl.prototype.editTodo = function (todoItem) {
             this.$scope.editedTodo = todoItem;
             //編集が中断された時用にクローンしておく
@@ -168,14 +171,14 @@ var todos;
         TodoCtrl.prototype.markAll = function (completed) {
             this.todos.forEach(function (todoItem) { todoItem.completed = completed; });
         };
-        TodoCtrl.$inject = [
-            '$scope',
-            '$location',
-            'todoStorage',
-            'filterFilter'
-        ];
         return TodoCtrl;
     }());
+    TodoCtrl.$inject = [
+        '$scope',
+        '$location',
+        'todoStorage',
+        'filterFilter'
+    ];
     todos.TodoCtrl = TodoCtrl;
 })(todos || (todos = {}));
 /// <reference path='_all.ts'/>
