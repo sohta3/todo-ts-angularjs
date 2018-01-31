@@ -13,5 +13,8 @@ module todos {
             .directive('todoBlur', todoBlur)
             .directive('todoFocucs', todoFocus)
             .directive('todoEscape', todoEscape)
-            .service('todoStorage', TodoStorage);
+            .service('todoStorage', TodoStorage).
+            config(['$locationProvider', function($locationProvider) {
+                $locationProvider.hashPrefix('');
+              }]);
 }

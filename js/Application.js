@@ -195,7 +195,10 @@ var todos;
         .directive('todoBlur', todos.todoBlur)
         .directive('todoFocucs', todos.todoFocus)
         .directive('todoEscape', todos.todoEscape)
-        .service('todoStorage', todos.TodoStorage);
+        .service('todoStorage', todos.TodoStorage).
+        config(['$locationProvider', function ($locationProvider) {
+            $locationProvider.hashPrefix('');
+        }]);
 })(todos || (todos = {}));
 /// <reference path='libs/jquery/jquery.d.ts' />
 /// <reference path='libs/angular/angular.d.ts' />
