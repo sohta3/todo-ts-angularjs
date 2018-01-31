@@ -47,7 +47,7 @@ module todos {
 		}
 
 		onPath(path: string){
-			this.$scope.statusFilter = (path === '/active' ) ? {completed: false} : (path === 'completed' ) ? { completed: true } : {};
+			this.$scope.statusFilter = (path === '/active' ) ? {completed: false} : (path === '/completed' ) ? { completed: true } : {};
 		}
 
 		onTodos() {
@@ -64,10 +64,6 @@ module todos {
 			}
 			this.todos.push(new TodoItem(newTodo, false));
 			this.$scope.newTodo = '';
-		}
-
-		checkurl(e){
-			console.log(e.location.path());
 		}
 
 		editTodo(todoItem:TodoItem){

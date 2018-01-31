@@ -122,7 +122,7 @@ var todos;
             $scope.location = $location;
         }
         TodoCtrl.prototype.onPath = function (path) {
-            this.$scope.statusFilter = (path === '/active') ? { completed: false } : (path === 'completed') ? { completed: true } : {};
+            this.$scope.statusFilter = (path === '/active') ? { completed: false } : (path === '/completed') ? { completed: true } : {};
         };
         TodoCtrl.prototype.onTodos = function () {
             this.$scope.remainingCount = this.filterFilter(this.todos, { completed: false }).length;
@@ -137,9 +137,6 @@ var todos;
             }
             this.todos.push(new todos.TodoItem(newTodo, false));
             this.$scope.newTodo = '';
-        };
-        TodoCtrl.prototype.checkurl = function (e) {
-            console.log(e.location.path());
         };
         TodoCtrl.prototype.editTodo = function (todoItem) {
             this.$scope.editedTodo = todoItem;
