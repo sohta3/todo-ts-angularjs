@@ -1,7 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "compile": "tsc --sourcemap --out js/Application.js js/_all.ts"
+    "compile": "tsc --sourcemap --out js/Application.js js/_all.ts",
+    "prestart": "npm run compile",
+    "start": "http-server"
   },
   "dependencies": {
     "angular": "^1.3.13",
@@ -9,6 +11,7 @@
     "todomvc-common": "^1.0.1"
   },
   "devDependencies": {
+    "http-server": "^0.11.1",
     "typescript": "2.3.4"
   }
 }
